@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Campus Assistant</title>
+    <style>
+        body {
+            background-color: #add8e6; /* Light blue */
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #chat-box {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: auto;
+        }
+        input, button {
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-box">
+        <h2>Smart Campus Assistant</h2>
+        <div id="response"></div>
+        <input type="text" id="userInput" placeholder="Ask me anything...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('response').innerText = data.response;
+            });
+        }
+    </script>
+</body>
+</html>
